@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Helper{% endblock title %}
+
+{% block content %}
+    <h1 class="mb-4">Shopping List</h1>
+    {{ "<b>Hi</b> | safe }}
+    {{ "<b>Hi</b> }}
+    <div class="list-group">
+        <table class="table table-light">
+            <thead>
+            <tr class="table-light">
+                <th scope="col">#</th>
+                <th scope="col">Product Type</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Color</th>
+                <th scope="col">Details</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in shopping_list %}
+                <tr>
+                    <th scope="row">{{ product.id }}</th>
+                    <td>{{ product.product }}</td>
+                    <td>{{ product.brand }}</td>
+                    <td>{{ product.color }}</td>
+
+                    <td><button type="button" class="btn btn-secondary">Details</button></td>
+                    <td><button type="button" class="btn btn-dark">Edit</button></td>
+                    <td><form action="/product/{{ product.id }}>/delete" method="POST">
+                        <input type="hidden" name="csrf_tocken" value="{{ csrf_token() }}">
+                        <button type="button" class="btn btn-danger"
+                            onclick="return confirm('Do you really want to delete {{ shopping_list.product }}?')">Delete
+                        </button>
+                    </form></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+    

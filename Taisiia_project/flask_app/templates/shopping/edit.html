@@ -1,0 +1,13 @@
+{% from "macro.html" import render_form_elements with context %}
+{% extends "base.html" %}
+
+{% block title %}Shopping Helper - Edit product{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Edit product</h1>
+
+    <form method="POST" novalidate>
+      {{ render_form_elements(product_form) }}
+    </form>
+
+{% endblock content %}
