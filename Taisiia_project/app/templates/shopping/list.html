@@ -26,19 +26,21 @@
                     <td>{{ product.product }}</td>
                     <td>{{ product.brand }}</td>
                     <td>{{ product.color }}</td>
-
-                    <td><button type="button" class="btn btn-secondary">Details</button></td>
-                    <td><button type="button" class="btn btn-dark">Edit</button></td>
-                    <td><form action="/product/{{ product.id }}>/delete" method="POST">
-                        <input type="hidden" name="csrf_tocken" value="{{ csrf_token() }}">
-                        <button type="button" class="btn btn-danger"
-                            onclick="return confirm('Do you really want to delete {{ shopping_list.product }}?')">Delete
-                        </button>
-                    </form></td>
+                    <td><a href="{{ url_for('shopping_list.product_details', product_id=product.id) }}"
+                        class="btn btn-secondary">Details</a></td>
+                    <td><a href="{{ url_for('shopping_list.edit_product', product_id=product.id) }}"
+                        class="btn btn-dark">Edit</a></td>
+                    <td>
+                        <form action="{{ url_for('shopping_list.delete_product', product_id=product.id) }}" method="POST">
+                              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                              <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Do you really want to delete {{ shopping_list.product }}?'">Delete</button>
+                        </form></td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
+    <a href="{{ url_for('add_product') }}" class="btn btn-link mt-4">Add product</a>
 {% endblock content %}
     

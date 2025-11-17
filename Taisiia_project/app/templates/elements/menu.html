@@ -7,27 +7,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a
-            class="nav-link {% if request.endpoint == 'home' %}active{% endif %}"
-            href="{{ url_for('home') }}">Home</a>
+          <a class="navbar-brand"
+             href="{{ url_for('main.home') }}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Tipps</a>
+          <a class="nav-link {{ 'active' if request.endpoint == 'tips.tips_list' }}" href="{{ url_for('tips.tips_list') }}">Tips</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Outfit</a>
+          <a class="nav-link {{ 'active' if request.endpoint == 'outfits.outfits_list' }}" href="{{ url_for('outfits.outfits_list') }}">Outfits</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Trends</a>
-        </li>
+          <a class="nav-link {{ 'active' if request.endpoint == 'trends.trends_list' }}" href="{{ url_for('trends.trends_list') }}">Trends</a>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Brands</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Favorite</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link {{ 'active' if request.endpoint == 'shopping_list.shopping_list' }}" href="{{ url_for('shopping_list.shopping_list') }}">Shopping List</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
