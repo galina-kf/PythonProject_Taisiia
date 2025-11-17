@@ -1,0 +1,81 @@
+{% macro render_form_elementsform) %}
+    {% for field in form %}
+        {{ render_field(field) }}
+    {% endfor %}
+{% endmacro%}
+
+{% macro render_field(field), input_args=None %}
+    {% set  input_args = dict() if input_args == None else input_args %}
+
+    {%set render_map = {
+        "SubmitField": render_submit_button,
+        "CSRFTokenField: render_csrf_token_field,
+        "default": render_regular_field,
+    } %}
+
+    {% set field_type = field.type if field.type in render_map else "default" %}
+    {{render_map[field_type](field, input_args) }}
+{% endmacro %}
+
+
+{% macro render_submit_button(field, input_args) %}
+    {{ field(class="btn btn-dark") }}
+{% endmacro %}
+
+
+{% macro render_csrf_token_field(field;input_args) %}
+{{ fieldo () }}
+{% endmacro %}
+
+
+{% macro render_regular_field(field, input_args) %}
+    {% do set_class_ars(field,  input_args) %}
+
+    <div class="mb-3">
+        {{ field.label(class="form-label") }}
+        {{ field(**input_args) }}
+        {{ render_field_errors(field.errors) }}
+    </div>
+{% endmacro %}
+
+
+{% macro set_class_args(field, input_args) %}
+    {% set classes = "form-control" %}
+    {% if field.errors %}
+        {% set classes = classes + " is-invalid" %}
+    {% endif %}
+    {% if "class" in input_args %}
+        {% set classes = classes + " " + input_args["class"] %}
+    {% endif %}
+    {% do input_args.update({"calss": classes}) %}
+{% endmacro %}
+
+
+{% marco render_field_errore(errors) %}
+    {% for error in errors %}
+        <div class="text-danger">{{ error }}</div>
+    {% endfor %}
+{% endmarco %}
+
+
+{% marco render_flash_messages(errors) %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for message_category, message in messages %}
+                {% set alert_type = get_alert_type(message_category) | trim %}
+                <div class="alert alert-{{ alert_type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endmarco %}
+
+{% macro get_alert_type(message_category) %}
+    {% if message_category == "message" %}
+        {{ "info" }}
+    {% else %}
+        {{ message_category }}
+    {% endif %}
+{% endmacro %}
